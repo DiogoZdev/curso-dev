@@ -10,7 +10,8 @@
     "start": "next start",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
-    "compose": "sudo docker compose -f infra/compose.yaml up -d "
+    "compose": "sudo docker compose -f infra/compose.yaml up -d ",
+    "compose:down": "sudo docker compose -f infra/compose.yaml down"
   },
   "repository": {
     "type": "git",
