@@ -8,12 +8,17 @@ const query = async (queryObject) => {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME
   });
+
   await client.connect();
 
-  const res = await client.query(queryObject);
-  await client.end();
+  try {
+    const res = await client.query(queryObject);
+    await client.end();
 
-  return res;
+    return res;
+  } catch {
+    await client.end();
+  }
 };
 
 export default {
