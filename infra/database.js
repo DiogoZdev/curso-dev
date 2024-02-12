@@ -9,9 +9,8 @@ const query = async (queryObject) => {
     database: process.env.DB_NAME
   });
 
-  await client.connect();
-
   try {
+    await client.connect();
     const res = await client.query(queryObject);
     await client.end();
 

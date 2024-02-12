@@ -12,9 +12,10 @@ export default async function status(_, response) {
     updated_at: updatedAt,
     dependencies: {
       database: {
-        postgres_version: dbVersion.rows[0].server_version,
-        used_connections: connections.rows[0].connections,
-        max_connections: Number(maxConnections.rows[0].max_connections)
+        postgres_version: dbVersion?.rows[0]?.server_version || "ERROR",
+        used_connections: Number(connections?.rows[0]?.connections) || "ERROR",
+        max_connections:
+          Number(maxConnections?.rows[0]?.max_connections) || "ERROR"
       }
     }
   };
