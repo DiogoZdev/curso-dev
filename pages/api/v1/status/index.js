@@ -13,6 +13,7 @@ export default async function status(_, response) {
 
   const info = {
     updated_at: updatedAt,
+    environment: process.env.NODE_ENV,
     dependencies: {
       database: {
         postgres_version: dbVersion?.rows[0]?.server_version || "ERROR",
