@@ -15,6 +15,9 @@
     "migration:create": "node-pg-migrate create -m infra/migrations",
     "migration:up": "node-pg-migrate up -m infra/migrations"
   },
+  "jest": {
+    "maxWorkers": 1
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DiogoZdev/curso-dev.git"

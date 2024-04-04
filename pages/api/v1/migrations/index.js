@@ -2,16 +2,24 @@ import migrationRunner from "node-pg-migrate";
 import { join } from "node:path";
 
 export default async function migrations(request, response) {
-  const migrations = await migrationRunner({
+
+  const config = {
     databaseUrl: process.env.DATABASE_URL,
     dir: join("infra", "migrations"),
-    dryRun: true,
     direction: "up",
     verbose: true,
     migrationsTable: "pgmigrations"
-  });
+  }
 
-  console.log(migrations);
+  if (request.method === "POST") {
+    config.dryRun = false;
+  }
+
+  if (request.method === "GET") {
+    config.dryRun = true;
+  }
+
+  const migrations = await migrationRunner(config);
 
   return response.status(200).json(migrations);
 }
