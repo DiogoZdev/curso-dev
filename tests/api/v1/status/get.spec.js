@@ -1,7 +1,6 @@
 it("should GET api/v1/status => 200", async () => {
   const response = await fetch(`http://localhost:3000/api/v1/status`);
 
-  console.log(response.status);
   expect(response.status).toBe(200);
 
   const responseBody = await response.json();
@@ -15,5 +14,7 @@ it("should GET api/v1/status => 200", async () => {
   expect(responseBody.dependencies.database.postgres_version).toBeTruthy();
   expect(responseBody.dependencies.database.used_connections).toBeDefined();
   expect(responseBody.dependencies.database.max_connections).toBeDefined();
-  expect(responseBody.dependencies.database.max_connections).toBeGreaterThan(10);
+  expect(responseBody.dependencies.database.max_connections).toBeGreaterThan(
+    10
+  );
 });
