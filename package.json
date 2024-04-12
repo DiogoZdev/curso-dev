@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "test": "jest",
-    "test:watch": "jest --watchAll",
+    "test": "NODE_ENV=development jest --runInBand",
+    "test:watch": "NODE_ENV=development jest --watchAll --runInBand ",
+    "test:cov": "NODE_ENV=development jest --watchAll --runInBand --coverage NODE_ENV=development",
     "start": "next start",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
@@ -14,9 +15,6 @@
     "compose:down": "sudo docker compose -f compose.yaml down",
     "migration:create": "node-pg-migrate create -m infra/migrations",
     "migration:up": "node-pg-migrate up -m infra/migrations"
-  },
-  "jest": {
-    "maxWorkers": 1
   },
   "repository": {
     "type": "git",
