@@ -1,7 +1,7 @@
 import { Client } from "pg";
 
 const query = async (queryObject) => {
-  const development = process.env.NODE_ENV === "development";
+  const production = process.env.NODE_ENV === "production";
   const useSSL = process.env.USE_SSL === "true";
 
   const client = new Client({
@@ -10,7 +10,7 @@ const query = async (queryObject) => {
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    ssl: !development && useSSL ? true : false
+    ssl: production && useSSL ? true : false
   });
 
   try {
