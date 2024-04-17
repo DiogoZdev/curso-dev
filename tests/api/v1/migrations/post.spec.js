@@ -14,9 +14,9 @@ describe("POST to /api/migrations", () => {
       method: "POST"
     });
 
-    expect(response.status).toBe(200);
     const body = await response.json();
     expect(Array.isArray(body)).toBe(true);
+    expect(response.status).toBe(body.length ? 201 : 200);
 
     if (body.legth) {
       const response = await database.query("SELECT * FROM pgmigrations;");

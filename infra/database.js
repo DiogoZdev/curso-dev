@@ -1,6 +1,20 @@
 import { Client } from "pg";
 
 const query = async (queryObject) => {
+  let client;
+  try {
+    client = await getNewClient();
+    const res = await client.query(queryObject);
+
+    return res;
+  } catch (err) {
+    console.error(err);
+  } finally {
+    await client.end();
+  }
+};
+
+async function getNewClient() {
   const production = process.env.NODE_ENV === "production";
   const useSSL = process.env.USE_SSL === "true";
 
@@ -13,17 +27,11 @@ const query = async (queryObject) => {
     ssl: production && useSSL ? true : false
   });
 
-  try {
-    await client.connect();
-    const res = await client.query(queryObject);
-    await client.end();
-
-    return res;
-  } catch {
-    await client.end();
-  }
-};
+  await client.connect();
+  return client;
+}
 
 export default {
-  query: query
+  query,
+  getNewClient
 };
