@@ -3,25 +3,40 @@ import { join } from "node:path";
 import database from "infra/database.js";
 
 export default async function migrations(request, response) {
-  const dbClient = await database.getNewClient();
-  const config = {
-    dbClient,
-    dir: join("infra", "migrations"),
-    direction: "up",
-    verbose: true,
-    migrationsTable: "pgmigrations"
-  };
+  let dryRun;
 
   if (request.method === "POST") {
-    config.dryRun = false;
+    dryRun = false;
+    await run();
   }
 
   if (request.method === "GET") {
-    config.dryRun = true;
+    dryRun = true;
+    await run();
   }
 
-  const migrations = await migrationRunner(config);
-  await dbClient.end();
+  async function run() {
+    const dbClient = await database.getNewClient();
+    try {
+      const config = {
+        dbClient,
+        dir: join("infra", "migrations"),
+        direction: "up",
+        verbose: true,
+        dryRun,
+        migrationsTable: "pgmigrations"
+      };
 
-  return response.status(migrations.length ? 201 : 200).json(migrations);
+      const migrations = await migrationRunner(config);
+      await dbClient.end();
+
+      return response.status(migrations.length ? 201 : 200).json(migrations);
+    } catch {
+      return response.status(500).json();
+    } finally {
+      await dbClient.end();
+    }
+  }
+
+  return response.status(400).json([]);
 }
