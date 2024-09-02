@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run compose && sleep 5s && npm run migration:up && next dev",
+    "dev": "npm run up-database && next dev",
     "down": "npm run compose:down",
-    "test": "NODE_ENV=development jest --runInBand",
+    "test": "NODE_ENV=development npm run up-database && concurrently --names next,jest --hide next -k -s command-jest 'npm:dev' 'sleep 5 && jest --runInBand'",
     "test:watch": "NODE_ENV=development jest --watchAll --runInBand ",
     "test:cov": "NODE_ENV=development jest --watchAll --runInBand --coverage NODE_ENV=development",
     "start": "next start",
@@ -16,7 +16,8 @@
     "compose:down": "docker compose -f compose.yaml down",
     "migration:create": "node-pg-migrate create -m infra/migrations",
     "migration:up": "node-pg-migrate up -m infra/migrations",
-    "await-postgres": "node infra/scripts/await-postgres.js"
+    "await-postgres": "node infra/scripts/await-postgres.js",
+    "up-database": "npm run compose && npm run migration:up"
   },
   "repository": {
     "type": "git",
