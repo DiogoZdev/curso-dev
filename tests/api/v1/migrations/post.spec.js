@@ -18,6 +18,7 @@ describe("POST to /api/migrations", () => {
 
     if (body.legth) {
       const response = await database.query("SELECT * FROM pgmigrations;");
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(response.rows.length).toBeGreaterThan(0);
     }
   });

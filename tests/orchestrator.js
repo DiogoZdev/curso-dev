@@ -16,4 +16,6 @@ async function awaitServices() {
   }
 }
 
-export default { awaitServices };
+const orchestrator = { awaitServices };
+
+export default orchestrator;
