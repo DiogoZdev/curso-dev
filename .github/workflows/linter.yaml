@@ -1,12 +1,11 @@
-name: Testing
+name: Linter
 
 on: pull_request
 
 jobs:
-  jest:
-    name: Jest Ubuntu
+  prettier:
+    name: Prettier
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -15,5 +14,4 @@ jobs:
           node-version: 18.16.1
 
       - run: npm ci
-
-      - run: npm run test
+      - run: npm run lint:prettier:check

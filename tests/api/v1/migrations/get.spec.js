@@ -6,7 +6,6 @@ beforeAll(async () => {
   await database.query("DROP schema public cascade; CREATE SCHEMA public;");
 });
 
-
 describe("GET to /api/migrations", () => {
   test("GET to /api/migrations should return 200", async () => {
     const response = await fetch("http://localhost:3000/api/v1/migrations");

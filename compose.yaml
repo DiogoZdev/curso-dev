@@ -13,7 +13,18 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres", "-h", "localhost"]
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "postgres",
+          "-U",
+          "postgres",
+          "-h",
+          "localhost"
+        ]
       interval: 1s
       timeout: 1s
       retries: 300
