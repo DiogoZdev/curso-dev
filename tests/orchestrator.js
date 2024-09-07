@@ -1,19 +1,19 @@
-import retry from 'async-retry'
+import retry from "async-retry";
 
 async function awaitServices() {
-  await waitForWebServer()
+  await waitForWebServer();
 
   async function waitForWebServer() {
     return retry(fetchStatusPage, {
       retries: 100,
-      maxTimeout: 2000,
-    })
+      maxTimeout: 2000
+    });
 
     async function fetchStatusPage() {
-      const res = await fetch('http://localhost:3000/api/v1/status')
-      await res.json()
+      const res = await fetch("http://localhost:3000/api/v1/status");
+      await res.json();
     }
   }
 }
 
-export default { awaitServices }
+export default { awaitServices };

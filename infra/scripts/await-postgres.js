@@ -1,10 +1,12 @@
-const { exec } = require("node:child_process")
+const { exec } = require("node:child_process");
 
 async function checkPostgres() {
-  await exec("docker exec postgres-container pg_isready --host localhost", handleResponse);
+  await exec(
+    "docker exec postgres-container pg_isready --host localhost",
+    handleResponse
+  );
 
   function handleResponse(error, stdout, stderr) {
-
     if (stdout.search("accepting connections") === -1) {
       process.stdout.write(".");
 
@@ -17,5 +19,3 @@ async function checkPostgres() {
 
 console.log("🟡  Aguardando disponibilidade do Postgres");
 checkPostgres();
-
-
