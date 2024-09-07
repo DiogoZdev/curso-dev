@@ -13,6 +13,7 @@
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "next lint --dir .",
+    "lint:all": "npm run lint:prettier:check && npm run lint:prettier:fix && npm run lint:eslint:check",
     "compose": "docker compose -f compose.yaml up -d && node infra/scripts/await-postgres.js",
     "compose:down": "docker compose -f compose.yaml down",
     "migration:create": "node-pg-migrate create -m infra/migrations",

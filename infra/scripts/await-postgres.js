@@ -7,7 +7,7 @@ async function checkPostgres() {
     handleResponse
   );
 
-  function handleResponse(_, stdout,) {
+  function handleResponse(_, stdout) {
     if (stdout.search("accepting connections") === -1) {
       process.stdout.write(".");
 
