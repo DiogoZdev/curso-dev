@@ -7,7 +7,7 @@ beforeAll(async () => {
 it("should GET api/v1/status => 200", async () => {
   const response = await fetch(`http://localhost:3000/api/v1/status`);
 
-  expect(response.status).toBe(201);
+  expect(response.status).toBe(200);
 
   const responseBody = await response.json();
 
