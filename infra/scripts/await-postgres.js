@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { exec } = require("node:child_process");
 
 async function checkPostgres() {
@@ -6,7 +7,7 @@ async function checkPostgres() {
     handleResponse
   );
 
-  function handleResponse(error, stdout, stderr) {
+  function handleResponse(_, stdout,) {
     if (stdout.search("accepting connections") === -1) {
       process.stdout.write(".");
 

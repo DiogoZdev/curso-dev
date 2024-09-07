@@ -1,4 +1,3 @@
-const dotenv = require("dotenv");
 const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
