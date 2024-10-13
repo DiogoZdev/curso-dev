@@ -28,10 +28,10 @@ export default async function migrations(request, response) {
       };
 
       const migrations = await migrationRunner(config);
-      await dbClient.end();
 
       return response.status(migrations.length ? 201 : 200).json(migrations);
-    } catch {
+    } catch (error) {
+      console.error(error);
       return response.status(500).json();
     } finally {
       await dbClient.end();
