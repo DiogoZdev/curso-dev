@@ -22,7 +22,9 @@ describe("GET /api/v1/status", () => {
       expect(responseBody.dependencies.database.postgres_version).toBeTruthy();
       expect(responseBody.dependencies.database.used_connections).toBeDefined();
       expect(responseBody.dependencies.database.max_connections).toBeDefined();
-      expect(responseBody.dependencies.database.max_connections).toBeGreaterThan(10);
+      expect(
+        responseBody.dependencies.database.max_connections
+      ).toBeGreaterThan(10);
     });
-  })
+  });
 });

@@ -16,5 +16,5 @@ describe("GET /api/migrations", () => {
       expect(body.length).toBeGreaterThan(0);
       expect(response.status).toBe(body.length ? 201 : 200);
     });
-  })
+  });
 });
