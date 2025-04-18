@@ -1,5 +1,5 @@
 import migrationRunner from "node-pg-migrate";
-import { join } from "node:path";
+import { resolve } from "node:path";
 import database from "infra/database.js";
 
 export default async function migrations(request, response) {
@@ -20,7 +20,7 @@ export default async function migrations(request, response) {
     try {
       const config = {
         dbClient,
-        dir: join("infra", "migrations"),
+        dir: resolve("infra", "migrations"),
         direction: "up",
         verbose: true,
         dryRun,
@@ -28,10 +28,10 @@ export default async function migrations(request, response) {
       };
 
       const migrations = await migrationRunner(config);
-      await dbClient.end();
 
       return response.status(migrations.length ? 201 : 200).json(migrations);
-    } catch {
+    } catch (error) {
+      console.error(error);
       return response.status(500).json();
     } finally {
       await dbClient.end();
