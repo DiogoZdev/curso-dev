@@ -28,6 +28,6 @@ export function Card({ title, text, isOk }) {
         <h2>{title}</h2>
         <p>{text}</p>
       </div>
-  </>
-  )
+    </>
+  );
 }

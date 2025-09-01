@@ -1,5 +1,5 @@
 import database from "infra/database";
-import { InternalServerError } from "../../../../infra/errors"
+import { InternalServerError } from "../../../../infra/errors";
 
 export default async function status(_, response) {
   try {
@@ -19,7 +19,8 @@ export default async function status(_, response) {
       dependencies: {
         database: {
           postgres_version: dbVersion?.rows[0]?.server_version || "ERROR",
-          used_connections: Number(connections?.rows[0]?.connections) || "ERROR",
+          used_connections:
+            Number(connections?.rows[0]?.connections) || "ERROR",
           max_connections:
             Number(maxConnections?.rows[0]?.max_connections) || "ERROR"
         }
@@ -28,15 +29,14 @@ export default async function status(_, response) {
 
     response.status(200).json(info);
   } catch (err) {
-
     const publicErrorObject = new InternalServerError({
-      cause: err,
+      cause: err
     });
 
     console.error(publicErrorObject);
 
     response.status(500).json({
-      error: "internal server error",
+      error: "internal server error"
     });
   }
 }

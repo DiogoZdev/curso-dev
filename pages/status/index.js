@@ -15,7 +15,7 @@ function StatusPage() {
   const { data } = useQuery({
     queryKey: ["status"],
     queryFn: fetchStatus,
-    refetchInterval: 5000,
+    refetchInterval: 5000
   });
 
   return (
@@ -42,7 +42,6 @@ function StatusPage() {
       `}</style>
 
       <div className="page">
-
         <h1>System Status</h1>
 
         <div className="cards_area">
