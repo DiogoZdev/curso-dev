@@ -6,32 +6,30 @@ import { controllerHandlers } from "infra/controller";
 
 const router = createRouter(controllerHandlers);
 
-router
-  .get(getHandler)
-  .post(postHandler)
+router.get(getHandler).post(postHandler);
 
-export default router.handler()
+export default router.handler();
 
 async function run(isDryRun) {
-    const dbClient = await database.getNewClient();
+  const dbClient = await database.getNewClient();
 
-    try {
-      const config = {
-        dbClient,
-        dir: resolve("infra", "migrations"),
-        direction: "up",
-        verbose: true,
-        dryRun: isDryRun,
-        migrationsTable: "pgmigrations"
-      };
+  try {
+    const config = {
+      dbClient,
+      dir: resolve("infra", "migrations"),
+      direction: "up",
+      verbose: true,
+      dryRun: isDryRun,
+      migrationsTable: "pgmigrations"
+    };
 
-      const migrations = await migrationRunner(config);
+    const migrations = await migrationRunner(config);
 
-      return [migrations.length ? 201 : 200, migrations];
-    } finally {
-      await dbClient.end();
-    }
+    return [migrations.length ? 201 : 200, migrations];
+  } finally {
+    await dbClient.end();
   }
+}
 
 async function getHandler(_, response) {
   const [status, migrations] = await run(true);

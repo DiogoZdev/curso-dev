@@ -3,7 +3,7 @@ import database from "infra/database";
 import { controllerHandlers } from "infra/controller";
 
 const router = createRouter();
-router.get(getHandler)
+router.get(getHandler);
 
 export default router.handler(controllerHandlers);
 
@@ -24,8 +24,7 @@ async function getHandler(_, res) {
     dependencies: {
       database: {
         postgres_version: dbVersion?.rows[0]?.server_version || "ERROR",
-        used_connections:
-          Number(connections?.rows[0]?.connections) || "ERROR",
+        used_connections: Number(connections?.rows[0]?.connections) || "ERROR",
         max_connections:
           Number(maxConnections?.rows[0]?.max_connections) || "ERROR"
       }
@@ -34,4 +33,3 @@ async function getHandler(_, res) {
 
   res.status(200).json(info);
 }
-

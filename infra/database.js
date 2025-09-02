@@ -11,10 +11,10 @@ async function query(queryObject) {
     return res;
   } catch (err) {
     const serviceErrorObj = new ServiceError({
-      message: 'Erro ao conectar ou executar query contra o Banco de Dados',
-      cause: err,
+      message: "Erro ao conectar ou executar query contra o Banco de Dados",
+      cause: err
     });
-    throw serviceErrorObj
+    throw serviceErrorObj;
   } finally {
     await client?.end();
   }

@@ -8,7 +8,7 @@ describe("POST /api/v1/status", () => {
   describe("anonymous", () => {
     it("fetching system status", async () => {
       const response = await fetch(`http://localhost:3000/api/v1/status`, {
-        method: 'POST'
+        method: "POST"
       });
 
       expect(response.status).toBe(405);
@@ -20,7 +20,7 @@ describe("POST /api/v1/status", () => {
         method: "MethodNotAllowedError",
         message: "Método não permitido",
         action: "Verifique o método HTTP usado na requisição",
-        status_code: 405,
+        status_code: 405
       });
     });
   });

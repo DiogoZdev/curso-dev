@@ -1,9 +1,9 @@
 import { InternalServerError, MethodNotAllowedError } from "./errors";
 
-function onErrorHandler(error, req, res)  {
+function onErrorHandler(error, req, res) {
   const publicErrorObject = new InternalServerError({
     statusCode: error.statusCode,
-    cause: error,
+    cause: error
   });
 
   res.status(publicErrorObject.statusCode).json(publicErrorObject);
@@ -15,5 +15,5 @@ function onNoMacthHandler(_, res) {
 
 export const controllerHandlers = {
   onError: onErrorHandler,
-  onNoMatch: onNoMacthHandler,
-}
+  onNoMatch: onNoMacthHandler
+};
