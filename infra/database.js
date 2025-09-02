@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { Client } from "pg";
+import { ServiceError } from "./errors";
 
 async function query(queryObject) {
   let client;
@@ -9,8 +10,11 @@ async function query(queryObject) {
 
     return res;
   } catch (err) {
-    console.error(err);
-    throw err;
+    const serviceErrorObj = new ServiceError({
+      message: 'Erro ao conectar ou executar query contra o Banco de Dados',
+      cause: err,
+    });
+    throw serviceErrorObj
   } finally {
     await client?.end();
   }

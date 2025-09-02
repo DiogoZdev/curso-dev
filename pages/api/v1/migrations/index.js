@@ -1,49 +1,46 @@
 import migrationRunner from "node-pg-migrate";
 import { resolve } from "node:path";
 import database from "infra/database.js";
+import { createRouter } from "next-connect";
+import { controllerHandlers } from "infra/controller";
 
-export default async function migrations(request, response) {
-  const allowedMethods = ["GET", "POST"];
-  if (!allowedMethods.includes(request.method)) {
-    return response.status(405).json({
-      error: `Method ${request.method} is not allowed`
-    });
-  }
+const router = createRouter(controllerHandlers);
 
-  let dryRun;
+router
+  .get(getHandler)
+  .post(postHandler)
 
-  if (request.method === "POST") {
-    dryRun = false;
-    await run();
-  }
+export default router.handler()
 
-  if (request.method === "GET") {
-    dryRun = true;
-    await run();
-  }
-
-  async function run() {
+async function run(isDryRun) {
     const dbClient = await database.getNewClient();
+
     try {
       const config = {
         dbClient,
         dir: resolve("infra", "migrations"),
         direction: "up",
         verbose: true,
-        dryRun,
+        dryRun: isDryRun,
         migrationsTable: "pgmigrations"
       };
 
       const migrations = await migrationRunner(config);
 
-      return response.status(migrations.length ? 201 : 200).json(migrations);
-    } catch (error) {
-      console.error(error);
-      return response.status(500).json();
+      return [migrations.length ? 201 : 200, migrations];
     } finally {
       await dbClient.end();
     }
   }
 
-  return response.status(400).json([]);
+async function getHandler(_, response) {
+  const [status, migrations] = await run(true);
+
+  return response.status(status).json(migrations);
+}
+
+async function postHandler(_, response) {
+  const [status, migrations] = await run(false);
+
+  return response.status(status).json(migrations);
 }

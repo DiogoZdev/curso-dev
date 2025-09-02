@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run database:up && next dev",
-    "down": "npm run compose:down",
     "test": "NODE_ENV=development npm run database:up && concurrently --names next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand\"",
     "posttest": "npm run compose:down",
     "test:watch": "NODE_ENV=development npm run database:up && concurrently --names next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --watchAll --verbose\"",
@@ -15,12 +14,12 @@
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "next lint --dir .",
     "lint:all": "npm run lint:prettier:check && npm run lint:prettier:fix && npm run lint:eslint:check",
-    "compose": "docker compose -f compose.yaml up -d && node infra/scripts/await-postgres.js",
+    "compose:up": "docker compose -f compose.yaml up -d && node infra/scripts/await-postgres.js",
     "compose:down": "docker compose -f compose.yaml down",
     "migration:create": "node-pg-migrate create -m infra/migrations",
     "migration:up": "node-pg-migrate up -m infra/migrations",
     "await-postgres": "node infra/scripts/await-postgres.js",
-    "database:up": "npm run compose && npm run migration:up",
+    "database:up": "npm run compose:up && npm run migration:up",
     "prepare": "husky"
   },
   "repository": {
@@ -41,6 +40,7 @@
     "dotenv": "16.4.5",
     "dotenv-expand": "11.0.6",
     "next": "14.2.15",
+    "next-connect": "1.0.0",
     "node-pg-migrate": "7.6.1",
     "pg": "8.12.0",
     "react": "18.3.1",
