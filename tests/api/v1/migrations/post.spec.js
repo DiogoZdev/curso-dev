@@ -19,7 +19,7 @@ describe("POST /api/migrations", () => {
     });
 
     test("Run pending migrations for the second time", async () => {
-       const response = await fetch("http://localhost:3000/api/v1/migrations", {
+      const response = await fetch("http://localhost:3000/api/v1/migrations", {
         method: "POST"
       });
 

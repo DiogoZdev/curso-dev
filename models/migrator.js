@@ -19,12 +19,12 @@ async function execute(config) {
     const pendingMigrations = await migrationRunner({
       ...migrationOptions,
       dryRun,
-      dbClient,
+      dbClient
     });
 
     return pendingMigrations;
   } finally {
-    await dbClient?.end()
+    await dbClient?.end();
   }
 }
 
@@ -39,5 +39,4 @@ async function runPendingMigrations() {
 export const migrator = {
   listPendingMigrations,
   runPendingMigrations
-}
-
+};
