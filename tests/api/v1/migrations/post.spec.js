@@ -6,7 +6,7 @@ beforeAll(async () => {
   await database.query("DROP schema public cascade; CREATE SCHEMA public;");
 });
 
-describe("POST /api/migrations", () => {
+describe("POST /api/v1/migrations", () => {
   describe("anonymous", () => {
     test("Run pending migrations for the first time", async () => {
       const response = await fetch("http://localhost:3000/api/v1/migrations", {
