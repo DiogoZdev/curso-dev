@@ -19,8 +19,14 @@ describe("POST /api/migrations", () => {
     });
 
     test("Run pending migrations for the second time", async () => {
-      const response = await database.query("SELECT * FROM pgmigrations;");
-      expect(response.rows.length).toBeGreaterThan(0);
+      const response = await fetch("http://localhost:3000/api/v1/migrations", {
+        method: "POST"
+      });
+
+      const body = await response.json();
+      expect(Array.isArray(body)).toBe(true);
+      expect(body.length).toBe(0);
+      expect(response.status).toBe(200);
     });
   });
 });
