@@ -5,7 +5,7 @@ import database from "infra/database.js";
 const migrationOptions = {
   dir: resolve("infra", "migrations"),
   direction: "up",
-  verbose: true,
+  log: () => {},
   migrationsTable: "pgmigrations"
 };
 
@@ -36,7 +36,9 @@ async function runPendingMigrations() {
   return execute({ dryRun: false });
 }
 
-export const migrator = {
+const migrator = {
   listPendingMigrations,
   runPendingMigrations
 };
+
+export default migrator;
